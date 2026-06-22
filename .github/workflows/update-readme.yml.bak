@@ -70,13 +70,10 @@ jobs:
   #        feed_list: "https://ghostinthedata.info/index.xml"
   #        max_post_count: 5
   #        readme_path: README.md
-  #       comment_tag_name: BLOG-POST-LIST
-  #       gh_token: ${{ secrets.GITHUB_TOKEN }}
+  #        comment_tag_name: BLOG-POST-LIST
+  #        gh_token: ${{ secrets.METRICS_TOKEN }}
 
   # ─── 3. Recent GitHub activity (pushes, PRs, code reviews) ─────────────────
-  # Readme-Workflows/recent-activity is the maintained fork of
-  # jamesgeorge007/github-activity-readme — updated for Node 24.
-  # README markers: <!--RECENT_ACTIVITY:start--> / <!--RECENT_ACTIVITY:end-->
   activity:
     name: Sync recent activity to README
     runs-on: ubuntu-latest
@@ -84,8 +81,9 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v4
-      - uses: Readme-Workflows/recent-activity@v2
+      - uses: jamesgeorge007/github-activity-readme@master
         env:
           GITHUB_TOKEN: ${{ secrets.METRICS_TOKEN }}
         with:
-          CONFIG_FILE: .github/recent-activity.config.yml
+          COMMIT_MSG: "chore: update recent activity"
+          MAX_LINES: 10
