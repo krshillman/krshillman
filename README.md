@@ -5,14 +5,13 @@
 ![](https://img.shields.io/badge/Code-JavaScript-informational?style=flat&logo=javascript&logoColor=white&color=2bbc8a)
 
 
-<div align="center">
-  <div style="display: flex; justify-content: space-between; gap: 10px;">
-    <img width="48%" src="https://github-readme-stats.vercel.app/api?username=krshillman&show_icons=true&theme=default&include_all_commits=true&count_private=true&hide_border=true" alt="GitHub Stats" />
-    <img width="48%" src="https://github-readme-stats.vercel.app/api/top-langs/?username=krshillman&layout=compact&theme=default&hide_border=true" alt="Top Languages" />
-  </div>
+### GitHub Metrics
 
+<p align="left"><img src="https://raw.githubusercontent.com/krshillman/krshillman/main/github-metrics.svg" /></p>
 
-</div>
+### Where to Find Me
 
+- 🌐 Blog: [ghostinthedata.info](https://ghostinthedata.info)
+- 💼 LinkedIn: [linkedin.com/in/krshillman](https://www.linkedin.com/in/krshillman)
 
 
