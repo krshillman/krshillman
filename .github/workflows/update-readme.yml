@@ -128,6 +128,7 @@ jobs:
   # ─── 3a. Personal recent activity (krshillman) ──────────────────────────────
   activity:
     name: Sync recent activity to README (personal)
+    if: github.event_name != 'push'
     runs-on: ubuntu-latest
     permissions:
       contents: write
