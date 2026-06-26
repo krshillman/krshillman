@@ -1,0 +1,31 @@
+# Configuration for Readme-Workflows/recent-activity@v2 — work account (chhillman-uom)
+# Full options: https://github.com/Readme-Workflows/recent-activity/wiki/Configuration
+
+settings:
+  # GitHub username to pull activity for
+  username: chhillman-uom
+
+  # How many activity items to show
+  item_max: 10
+
+  # Timezone for "last updated" timestamp
+  timezone: Australia/Melbourne
+
+  # Commit message when README is updated
+  commit_message: "chore: update work recent activity [skip ci]"
+
+  # README markers for the work account section
+  readme_file: README.md
+  comment_tag_name: WORK_ACTIVITY
+
+# Which event types to include (comment out any you don't want)
+activity:
+  - type: CommitCommentEvent
+  - type: IssueCommentEvent
+  - type: IssuesEvent
+  - type: PullRequestEvent
+  - type: PullRequestReviewEvent
+  - type: PullRequestReviewCommentEvent
+  - type: PushEvent
+  - type: ReleaseEvent
+  - type: WatchEvent
