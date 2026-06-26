@@ -1,27 +1,12 @@
 # Configuration for Readme-Workflows/recent-activity@v2
-# Full options: https://github.com/Readme-Workflows/recent-activity/wiki/Configuration
+# Full options: https://github.com/Readme-Workflows/recent-activity/blob/main/docs/Configuration.md
 
 settings:
-  # How many activity items to show
-  item_max: 10
-
-  # Timezone for "last updated" timestamp
-  timezone: Australia/Melbourne
-
-  # Commit message when README is updated
-  commit_message: "chore: update recent activity [skip ci]"
-
-  # Don't show the "last updated" line if you don't want it
-  # last_update: false
-
-# Which event types to include (comment out any you don't want)
-activity:
-  - type: CommitCommentEvent
-  - type: IssueCommentEvent
-  - type: IssuesEvent
-  - type: PullRequestEvent
-  - type: PullRequestReviewEvent
-  - type: PullRequestReviewCommentEvent
-  - type: PushEvent
-  - type: ReleaseEvent
-  - type: WatchEvent
+  username: "krshillman"
+  commit_msg: "chore: update recent activity [skip ci]"
+  max_lines: 10
+  readme_file: "./README.md"
+  date:
+    timezone: "Australia/Melbourne"
+    text: "Last updated: {DATE}"
+    format: "dddd, mmmm dS, yyyy, h:MM:ss TT"

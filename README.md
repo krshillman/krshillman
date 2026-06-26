@@ -7,7 +7,7 @@
 
 ---
 
-### 👤 Personal — [krshillman](https://github.com/krshillman)
+### Personal — [krshillman](https://github.com/krshillman)
 
 <p align="left"><img src="https://raw.githubusercontent.com/krshillman/krshillman/main/github-metrics.svg" /></p>
 
@@ -21,21 +21,13 @@
 
 ---
 
-### 🏢 Work — [chhillman-uom](https://github.com/chhillman-uom)
+### Work — [chhillman-uom](https://github.com/chhillman-uom)
 
 <p align="left"><img src="https://raw.githubusercontent.com/krshillman/krshillman/main/github-metrics-work.svg" /></p>
-
-**Recent activity**
-
-<!--WORK_ACTIVITY:start-->
-<!--WORK_ACTIVITY:end-->
-
-<!--WORK_ACTIVITY:last_update-->
-<!--WORK_ACTIVITY:last_update_end-->
 
 ---
 
 ### Where to Find Me
 
-- 🌐 Blog: [ghostinthedata.info](https://ghostinthedata.info)
-- 💼 LinkedIn: [linkedin.com/in/krshillman](https://www.linkedin.com/in/krshillman)
+- Blog: [ghostinthedata.info](https://ghostinthedata.info)
+- LinkedIn: [linkedin.com/in/krshillman](https://www.linkedin.com/in/krshillman)

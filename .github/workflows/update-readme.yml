@@ -139,16 +139,6 @@ jobs:
         with:
           CONFIG_FILE: .github/recent-activity.config.yml
 
-  # ─── 3b. Work recent activity (chhillman-uom) ───────────────────────────────
-  activity-work:
-    name: Sync recent activity to README (work)
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-    steps:
-      - uses: actions/checkout@v4
-      - uses: Readme-Workflows/recent-activity@v2.4.1
-        env:
-          GITHUB_TOKEN: ${{ secrets.WORK_TOKEN }}
-        with:
-          CONFIG_FILE: .github/recent-activity-work.config.yml
+  # Note: work account activity (chhillman-uom) is embedded inside
+  # github-metrics-work.svg via plugin_activity — no separate text job needed
+  # since recent-activity v2 does not support custom README marker names.
