@@ -19,7 +19,7 @@ I've led data engineering and analytics teams in regulated environments, and I w
   <img alt="Commits, pull requests, reviews, issues and languages over the last 12 months, combined across both accounts" src="https://raw.githubusercontent.com/krshillman/krshillman/profile-assets/overview-light.svg" width="100%">
 </picture>
 
-<sub>My day job happens on a separate account, [@chhillman-uom](https://github.com/chhillman-uom), so these cards merge both. Organisation and private-repository work is counted but never named. Refreshed every 6 hours by [a workflow in this repo](https://github.com/krshillman/krshillman/blob/main/.github/workflows/update-readme.yml).</sub>
+<sub>My day job happens on a separate account, [@chhillman-uom](https://github.com/chhillman-uom), so these cards merge both. Work in private repositories (personal or organisation) is counted but never named; public repositories are linked. Refreshed every 6 hours by [a workflow in this repo](https://github.com/krshillman/krshillman/blob/main/.github/workflows/update-readme.yml).</sub>
 
 ### 🔨 Recent activity
 

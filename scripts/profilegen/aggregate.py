@@ -34,6 +34,7 @@ class ActivityItem:
     title: str = ""
     url: str = ""
     state: str = ""
+    first: datetime | None = None  # earliest date for commits grouped over the window
     private: dict = field(default_factory=dict)
 
 
@@ -107,17 +108,13 @@ TOTAL_KEYS = ("contributions", "commits", "prs", "reviews", "issues", "restricte
 def totals(accounts: list[dict]) -> dict[str, dict[str, int]]:
     """{metric: {login: value}} for the last-year metrics, plus repos and all-time."""
     result = {key: {a["login"]: a["totals"].get(key, 0) for a in accounts} for key in TOTAL_KEYS}
-    result["repos"] = {
-        a["login"]: len(a["repos"]) + a.get("diagnostics", {}).get("hidden_repos", 0) for a in accounts
-    }
+    result["repos"] = {a["login"]: len(a["repos"]) for a in accounts}
     result["all_time"] = {a["login"]: sum(a.get("years", {}).values()) for a in accounts}
     return result
 
 
 def unique_repo_count(accounts: list[dict]) -> int:
-    names = {r["name"] for a in accounts for r in a["repos"]}
-    hidden = sum(a.get("diagnostics", {}).get("hidden_repos", 0) for a in accounts)
-    return len(names) + hidden
+    return len({r["name"] for a in accounts for r in a["repos"]})
 
 
 def first_year(accounts: list[dict]) -> int | None:
@@ -167,7 +164,7 @@ def language_breakdown(accounts: list[dict], ignore: tuple[str, ...] = (), limit
 
 # ── Recent activity ─────────────────────────────────────────────────────────
 
-_PRIVATE_COUNTERS = {"commits": "commits", "pr": "prs", "review": "reviews", "issue": "issues"}
+_PRIVATE_COUNTERS = {"commits": "commits", "pr": "prs", "review": "reviews", "issue": "issues", "repo": "created"}
 
 
 def activity_items(accounts: list[dict], since: datetime, limit: int) -> list[ActivityItem]:
@@ -182,7 +179,7 @@ def activity_items(accounts: list[dict], since: datetime, limit: int) -> list[Ac
     for account in accounts:
         label = account["label"]
         commits: dict[str, ActivityItem] = {}
-        summary = {"commits": 0, "prs": 0, "reviews": 0, "issues": 0, "repos": set(),
+        summary = {"commits": 0, "prs": 0, "reviews": 0, "issues": 0, "created": 0, "repos": set(),
                    "other": account.get("recent_restricted", 0)}
         latest: datetime | None = None
         for event in account["events"]:
@@ -197,9 +194,10 @@ def activity_items(accounts: list[dict], since: datetime, limit: int) -> list[Ac
                 summary["repos"].add(repo["name"])
                 latest = max(latest, at) if latest else at
             elif event["kind"] == "commits":
-                item = commits.setdefault(repo["name"], ActivityItem("commits", at, label, repo))
+                item = commits.setdefault(repo["name"], ActivityItem("commits", at, label, repo, first=at))
                 item.count += event["count"]
                 item.at = max(item.at, at)
+                item.first = min(item.first, at)
             else:
                 public.append(ActivityItem(
                     kind=event["kind"], at=at, account=label, repo=repo,

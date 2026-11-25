@@ -33,17 +33,18 @@ Each account needs its own **classic** personal access token, created while sign
 | `METRICS_TOKEN` | krshillman | personal |
 | `WORK_TOKEN` | chhillman-uom | work |
 
-- **Organisation with SAML SSO:** on the token's page, click *Configure SSO* and authorise it for the org. If you skip this, that org's private repos come back hidden and the workflow logs a warning.
-- **Least privilege:** with only `read:user`, private work still counts towards the totals and the calendar if *Include private contributions* is on. You lose the private repos' languages and the private-activity summary line.
+- **Organisation with SAML SSO:** on the token's page, click *Configure SSO* and authorise it for the org. If you skip this, GitHub may refuse the query with a SAML error, which fails the run with a hint in the log. Or it may count that org's work only as anonymous private contributions.
+- **Least privilege:** with only `read:user`, private work shows up only as anonymous counts. It still appears in the calendar and the all-time total (if *Include private contributions* is on), and as a single "N private contributions" line in Recent activity. The Commits, Pull requests, Code reviews, Issues and Repos tiles and the languages then cover public repositories only.
 - **Why classic tokens:** a fine-grained token is limited to one owner, either you or a single org. It can't cover your own repos and the org's repos at the same time.
-- **Failures:** if either token fails (for example, it expired), the run fails and the last good cards stay up. GitHub emails you about the failed run.
+- **Failures:** if either token fails (for example, it expired), the run fails and nothing is published, so the cards from the last successful run stay up. GitHub emails you about the failed run.
+- **First run:** before the first successful run there are no cards, so the README images show as broken. Run the workflow once (Actions → *Update profile* → *Run workflow*) before relying on it.
 
 ## Privacy
 
 - The SVGs contain only numbers and language names.
-- In the README, public repositories are named and linked.
+- In the README, public repositories are named and linked, including public organisation repositories and their PR and issue titles.
 - Anything in a private repository is folded into one anonymous line per account, for example "🔒 42 commits and 3 reviews across 4 private repositories". Repository names, PR titles and issue titles from private repositories are never written anywhere.
-- The workflow logs (public on a public repo) print counts only.
+- The workflow logs (public on a public repo) print counts and GitHub error *types* with fixed hints. They never print GitHub's raw error messages, which can name an organisation; run locally to see those.
 
 ## Run locally
 

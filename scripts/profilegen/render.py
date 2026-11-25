@@ -117,7 +117,7 @@ def _dot_legend(entries: list[tuple[str, str, str]], x: float, y: float, anchor:
 CELL, PITCH = 11, 14
 
 
-def contributions_svg(days: list[Day], accounts: list[AccountMeta], restricted: int, theme: Theme) -> str:
+def contributions_svg(days: list[Day], accounts: list[AccountMeta], theme: Theme) -> str:
     total = sum(d.total for d in days)
     per_account = {a.login: sum(d.by_account.get(a.login, 0) for d in days) for a in accounts}
     colors = {a.login: theme.accounts[i % len(theme.accounts)] for i, a in enumerate(accounts)}
@@ -127,8 +127,6 @@ def contributions_svg(days: list[Day], accounts: list[AccountMeta], restricted: 
         f'<tspan dx="8" font-size="15" class="m">contributions in the last year</tspan></text>',
     ]
     subtitle = " + ".join(f"@{a.login} ({a.label})" for a in accounts)
-    if restricted:
-        subtitle += f" · includes {_fmt(restricted)} private"
     body.append(f'<text x="{PAD}" y="74" font-size="12" class="m">{escape(subtitle)}</text>')
 
     bar_w = 260

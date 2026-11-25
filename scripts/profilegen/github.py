@@ -10,6 +10,7 @@ the pipeline (and the tests) never touch raw GraphQL shapes.
 from __future__ import annotations
 
 import json
+import os
 import time
 import urllib.error
 import urllib.request
@@ -78,13 +79,41 @@ class GitHubError(RuntimeError):
     pass
 
 
+# Fixed hints keyed on fragments of GitHub's error messages. In Actions only
+# the error type and these hints are printed: the logs of a public repository
+# are public, and raw messages can name organisations.
+_HINTS = (
+    ("SAML", "authorise the token for the organisation's SAML single sign-on"),
+    ("IP allow list", "an organisation IP allow list is blocking the Actions runner"),
+    ("rate limit", "GitHub API rate limit - try again later"),
+    ("Could not resolve to a User", "check the login in .github/profile.toml"),
+)
+
+
+def describe_errors(errors: list[dict]) -> str:
+    verbose = os.environ.get("GITHUB_ACTIONS") != "true"
+    parts = []
+    for error in errors[:5]:
+        message = error.get("message", "")
+        text = error.get("type", "ERROR")
+        hints = [hint for needle, hint in _HINTS if needle.lower() in message.lower()]
+        if hints:
+            text += f" ({'; '.join(hints)})"
+        if verbose:
+            text += f": {message[:200]}"
+        parts.append(text)
+    if len(errors) > 5:
+        parts.append(f"+{len(errors) - 5} more")
+    return "; ".join(parts) or "unknown error"
+
+
 def iso(dt: datetime) -> str:
     return dt.astimezone(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
 def graphql(token: str, query: str, variables: dict[str, Any], *, attempts: int = 3) -> tuple[dict, list]:
-    """Run a query. Returns (data, errors); partial data with errors is allowed
-    because SAML-protected orgs null out individual nodes rather than failing."""
+    """Run a query. Returns (data, errors): GraphQL can return partial data
+    alongside errors on nullable fields, which callers may still use."""
     body = json.dumps({"query": query, "variables": variables}).encode()
     request = urllib.request.Request(
         API_URL,
@@ -106,8 +135,10 @@ def graphql(token: str, query: str, variables: dict[str, Any], *, attempts: int 
             if exc.code in (502, 503, 504) and attempt < attempts:
                 time.sleep(5 * attempt)
                 continue
-            detail = exc.read()[:300].decode("utf-8", "replace")
-            raise GitHubError(f"HTTP {exc.code}: {detail}") from None
+            detail = ""
+            if os.environ.get("GITHUB_ACTIONS") != "true":
+                detail = ": " + exc.read()[:300].decode("utf-8", "replace")
+            raise GitHubError(f"HTTP {exc.code}{detail}") from None
         except (urllib.error.URLError, TimeoutError) as exc:
             if attempt < attempts:
                 time.sleep(5 * attempt)
@@ -117,8 +148,20 @@ def graphql(token: str, query: str, variables: dict[str, Any], *, attempts: int 
     errors = payload.get("errors") or []
     data = payload.get("data")
     if not data:
-        raise GitHubError("; ".join(e.get("message", "unknown error") for e in errors) or "empty response")
+        raise GitHubError(describe_errors(errors) if errors else "empty response")
     return data, errors
+
+
+def _require_user(data: dict, errors: list[dict], login: str) -> dict:
+    """Most fields under `user` are non-null in GitHub's schema, so a field
+    error anywhere below it (e.g. SAML enforcement on one repository) nulls the
+    whole user. Report the actual errors rather than a misleading "not found"."""
+    user = data.get("user")
+    if user:
+        return user
+    if errors and not all(e.get("type") == "NOT_FOUND" for e in errors):
+        raise GitHubError(f"GraphQL error for '{login}': {describe_errors(errors)}")
+    raise GitHubError(f"user '{login}' not found")
 
 
 def _repo(node: dict | None) -> dict | None:
@@ -138,11 +181,10 @@ def normalize(login: str, label: str, data: dict, year_totals: dict[str, int], e
     recent = user["recent"]
     calendar = year["contributionCalendar"]
 
-    repos, hidden_repos = [], 0
+    repos = []
     for entry in year.get("commitContributionsByRepository") or []:
         repo = _repo((entry or {}).get("repository"))
-        if repo is None:
-            hidden_repos += 1
+        if repo is None:  # not allowed by the schema; defensive only
             continue
         languages = [
             {"name": edge["node"]["name"], "color": edge["node"]["color"], "size": edge["size"]}
@@ -207,7 +249,6 @@ def normalize(login: str, label: str, data: dict, year_totals: dict[str, int], e
         "diagnostics": {
             "requested_login": login,
             "token_owner": (data.get("viewer") or {}).get("login"),
-            "hidden_repos": hidden_repos,
             "errors": [
                 {"type": e.get("type", "ERROR"), "message": e.get("message", "")[:200]} for e in errors
             ],
@@ -228,12 +269,8 @@ def fetch_year_totals(token: str, login: str, years: list[int], now: datetime) -
         )
     query = "query ($login: String!) { user(login: $login) { " + " ".join(parts) + " } }"
     data, errors = graphql(token, query, {"login": login})
-    user = data.get("user") or {}
-    totals = {
-        key[1:]: value["contributionCalendar"]["totalContributions"]
-        for key, value in user.items()
-        if value
-    }
+    user = _require_user(data, errors, login)
+    totals = {key[1:]: value["contributionCalendar"]["totalContributions"] for key, value in user.items()}
     return totals, errors
 
 
@@ -247,8 +284,7 @@ def fetch_account(login: str, label: str, token: str, now: datetime, activity_da
         "recentFrom": iso(now - timedelta(days=activity_days)),
     }
     data, errors = graphql(token, ACCOUNT_QUERY, variables)
-    if not data.get("user"):
-        raise GitHubError(f"user '{login}' not found")
-    years = data["user"]["year"].get("contributionYears") or []
+    user = _require_user(data, errors, login)
+    years = user["year"].get("contributionYears") or []
     year_totals, year_errors = fetch_year_totals(token, login, years, now)
     return normalize(login, label, data, year_totals, errors + year_errors)

@@ -1,9 +1,11 @@
+import os
 import unittest
 import xml.etree.ElementTree as ET
+from unittest import mock
 from datetime import date, datetime, timedelta, timezone
 from zoneinfo import ZoneInfo
 
-from profilegen import aggregate, blog, readme, render
+from profilegen import aggregate, blog, github, readme, render
 from profilegen.github import normalize
 
 NOW = datetime(2026, 11, 25, 12, 0, tzinfo=timezone.utc)
@@ -41,7 +43,6 @@ def graphql_payload(login="me", viewer="me", days=None):
                     {"contributions": {"totalCount": 1},
                      "repository": {**repo("org/secret-project", private=True), "languages": {"edges": [
                          {"size": 50, "node": {"name": "SQL", "color": "#e38c00"}}]}}},
-                    {"contributions": {"totalCount": 9}, "repository": None},  # SAML-hidden
                 ],
             },
             "recent": {
@@ -63,8 +64,9 @@ def graphql_payload(login="me", viewer="me", days=None):
                     None,
                 ]},
                 "pullRequestReviewContributions": {"nodes": []},
-                "issueContributions": {"nodes": [{"occurredAt": "2026-11-19T00:00:00Z", "issue": None}]},
-                "repositoryContributions": {"nodes": []},
+                "issueContributions": {"nodes": [None]},  # connection nodes are nullable
+                "repositoryContributions": {"nodes": [
+                    {"occurredAt": "2026-11-23T00:00:00Z", "repository": repo("org/new-private", private=True)}]},
             },
         },
     }
@@ -75,18 +77,43 @@ def account(login="me", label="personal", **kw):
 
 
 class NormalizeTest(unittest.TestCase):
-    def test_shapes_and_hidden_repos(self):
+    def test_shapes(self):
         acc = account()
         self.assertEqual(acc["totals"]["commits"], 5)
         self.assertEqual([r["name"] for r in acc["repos"]], ["me/public", "org/secret-project"])
-        self.assertEqual(acc["diagnostics"]["hidden_repos"], 1)
         self.assertEqual(len(acc["calendar"]), 3)
         kinds = sorted(e["kind"] for e in acc["events"])
-        self.assertEqual(kinds, ["commits", "commits", "commits", "pr", "pr"])  # null nodes skipped
+        self.assertEqual(kinds, ["commits", "commits", "commits", "pr", "pr", "repo"])  # null nodes skipped
 
     def test_token_owner_recorded(self):
         acc = normalize("work", "work", graphql_payload(login="work", viewer="someone-else"), {}, [])
         self.assertEqual(acc["diagnostics"]["token_owner"], "someone-else")
+
+
+class ErrorReportingTest(unittest.TestCase):
+    SAML = {"type": "FORBIDDEN", "path": ["user", "year"],
+            "message": "Resource protected by organization SAML enforcement. You must grant your token access to uni-org."}
+
+    def test_null_user_with_errors_reports_the_error(self):
+        with mock.patch.dict(os.environ, {"GITHUB_ACTIONS": "true"}):
+            with self.assertRaises(github.GitHubError) as ctx:
+                github._require_user({"viewer": {"login": "w"}, "user": None}, [self.SAML], "w")
+        message = str(ctx.exception)
+        self.assertIn("FORBIDDEN", message)
+        self.assertIn("SAML single sign-on", message)
+        self.assertNotIn("uni-org", message)  # raw text never reaches public Actions logs
+        self.assertNotIn("not found", message)
+
+    def test_local_runs_include_raw_message(self):
+        with mock.patch.dict(os.environ, {"GITHUB_ACTIONS": ""}):
+            self.assertIn("uni-org", github.describe_errors([self.SAML]))
+
+    def test_not_found(self):
+        err = {"type": "NOT_FOUND", "message": "Could not resolve to a User with the login of 'x'."}
+        with self.assertRaisesRegex(github.GitHubError, "not found"):
+            github._require_user({"user": None}, [err], "x")
+        with self.assertRaisesRegex(github.GitHubError, "not found"):
+            github._require_user({"user": None}, [], "x")
 
 
 class CalendarTest(unittest.TestCase):
@@ -143,11 +170,19 @@ class ActivityTest(unittest.TestCase):
         text = readme.activity_markdown(self.items(), TZ, 30)
         self.assertNotIn("secret-project", text)
         self.assertNotIn("Confidential", text)
-        self.assertIn("🔒 **7 commits** and 1 pull request across 1 private repository", text)
+        self.assertNotIn("new-private", text)
+        self.assertIn("🔒 **7 commits**, 1 pull request and 1 new repository across 2 private repositories", text)
+
+    def test_private_repo_creation_alone(self):
+        acc = account()
+        acc["events"] = [e for e in acc["events"] if e["kind"] == "repo"]
+        text = readme.activity_markdown(aggregate.activity_items([acc], NOW - timedelta(days=30), 10), TZ, 30)
+        self.assertIn("🔒 1 new repository across 1 private repository", text)
+        self.assertNotIn("0 private contributions", text)
 
     def test_public_commits_grouped_and_titles_escaped(self):
         text = readme.activity_markdown(self.items(), TZ, 30)
-        self.assertIn("Pushed **3 commits** to [me/public](https://github.com/me/public)", text)
+        self.assertIn("Pushed **3 commits** to [me/public](https://github.com/me/public) <sub>· personal · 20–24 Nov</sub>", text)
         self.assertIn(r"Fix \[bug\] in \*parser\* (merged)", text)
 
     def test_private_summary_survives_limit(self):
@@ -199,7 +234,7 @@ class RenderTest(unittest.TestCase):
         totals = aggregate.totals(accounts)
         langs = aggregate.language_breakdown(accounts)
         for theme in render.THEMES:
-            yield render.contributions_svg(days, meta, 0, theme)
+            yield render.contributions_svg(days, meta, theme)
             yield render.overview_svg(totals, aggregate.unique_repo_count(accounts), aggregate.first_year(accounts),
                                       langs, meta, NOW.astimezone(TZ), theme)
 

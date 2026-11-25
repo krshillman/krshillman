@@ -40,11 +40,8 @@ def report(account: dict) -> None:
     if owner and owner.lower() != account["login"].lower():
         warn(f"the token for @{account['login']} belongs to @{owner}. It cannot see @{account['login']}'s "
              "private contributions - create the token while signed in as that account.")
-    if diag.get("hidden_repos"):
-        warn(f"@{account['login']}: {diag['hidden_repos']} repositories were hidden from the token "
-             "(usually an organisation with SAML SSO - authorise the token for that org).")
-    for error in diag.get("errors", []):
-        warn(f"@{account['login']}: GraphQL {error['type']}: {error['message']}")
+    if diag.get("errors"):
+        warn(f"@{account['login']}: partial data - {github.describe_errors(diag['errors'])}")
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -102,7 +99,7 @@ def main(argv: list[str] | None = None) -> int:
     out.mkdir(parents=True, exist_ok=True)
     for theme in render.THEMES:
         (out / f"contributions-{theme.name}.svg").write_text(
-            render.contributions_svg(days, meta, sum(totals["restricted"].values()), theme), encoding="utf-8")
+            render.contributions_svg(days, meta, theme), encoding="utf-8")
         (out / f"overview-{theme.name}.svg").write_text(
             render.overview_svg(totals, aggregate.unique_repo_count(accounts), aggregate.first_year(accounts),
                                 languages, meta, now.astimezone(tz), theme), encoding="utf-8")
