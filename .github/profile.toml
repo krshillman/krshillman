@@ -1,0 +1,34 @@
+# Configuration for scripts/profilegen — builds the combined profile cards
+# and the README "recent activity" / "blog" sections.
+#
+# Each account needs a token in the environment variable named by `token_env`.
+# The workflow maps the repository secrets onto these names:
+#   PERSONAL_TOKEN <- secrets.METRICS_TOKEN   (token created by krshillman)
+#   WORK_TOKEN     <- secrets.WORK_TOKEN      (token created by chhillman-uom)
+# A token only sees its own owner's private contributions, so each account
+# must use a token created *by that account*.
+
+[[accounts]]
+login = "krshillman"
+label = "personal"
+token_env = "PERSONAL_TOKEN"
+
+[[accounts]]
+login = "chhillman-uom"
+label = "work"
+token_env = "WORK_TOKEN"
+
+[display]
+timezone = "Australia/Melbourne"
+
+[activity]
+days = 30        # look-back window for the README activity list
+max_items = 8    # private-repo summaries always fit; public items fill the rest
+
+[languages]
+max = 8          # legend entries (the rest are grouped as "Other")
+ignore = []      # e.g. ["Jupyter Notebook", "HTML"]
+
+[blog]
+feed = "https://ghostinthedata.info/posts/index.xml"
+max_posts = 5
