@@ -1,13 +1,12 @@
-# Hi, I'm Chris 👋
+# Hi, I'm Chris
 
 **Data Engineering & Analytics Manager at the University of Melbourne.**
 I've led data engineering and analytics teams in regulated environments, and I write about the practice of data engineering at [**Ghost in the Data**](https://ghostinthedata.info).
 
 [![Blog](https://img.shields.io/badge/Blog-ghostinthedata.info-2bbc8a?style=flat&logo=hugo&logoColor=white)](https://ghostinthedata.info)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-krshillman-0A66C2?style=flat)](https://www.linkedin.com/in/krshillman)
-[![Work account](https://img.shields.io/badge/Work_account-chhillman--uom-8250df?style=flat&logo=github&logoColor=white)](https://github.com/chhillman-uom)
 
-## 📊 Personal + work, combined
+## Personal + work, combined
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/krshillman/krshillman/profile-assets/contributions-dark.svg">
@@ -21,7 +20,7 @@ I've led data engineering and analytics teams in regulated environments, and I w
 
 <sub>My day job happens on a separate account, [@chhillman-uom](https://github.com/chhillman-uom), so these cards merge both. Work in private repositories (personal or organisation) is counted but never named; public repositories are linked. Refreshed every 6 hours by [a workflow in this repo](https://github.com/krshillman/krshillman/blob/main/.github/workflows/update-readme.yml).</sub>
 
-### 🔨 Recent activity
+### Recent activity
 
 <!-- profile:activity:start -->
 - 🔀 Opened PR [#1](https://github.com/krshillman/krshillman/pull/1) in [krshillman/krshillman](https://github.com/krshillman/krshillman): Combine personal and work accounts into one profile (merged) <sub>· personal · 25 Nov</sub>
@@ -29,7 +28,7 @@ I've led data engineering and analytics teams in regulated environments, and I w
 - 🔨 Pushed **27 commits** to [ghostinthedata-info/skills](https://github.com/ghostinthedata-info/skills) <sub>· personal · 21 Nov</sub>
 <!-- profile:activity:end -->
 
-### ✍️ Latest writing
+### Latest writing
 
 <!-- profile:blog:start -->
 - [Nobody Reads 7,000 Words the Night Before an Interview](https://ghostinthedata.info/posts/2026/2026-11-21-night-before-the-interview/) <sub>· 21 Nov 2026</sub>
@@ -39,7 +38,7 @@ I've led data engineering and analytics teams in regulated environments, and I w
 - [AWS MWAA: The Practitioner's Unvarnished Guide](https://ghostinthedata.info/posts/2026/2026-07-18-mwaa-unvarnished-guide/) <sub>· 18 Jul 2026</sub>
 <!-- profile:blog:end -->
 
-### 🧰 Tools I work with
+### Tools I work with
 
 ![Python](https://img.shields.io/badge/Python-3776AB?style=flat&logo=python&logoColor=white)
 ![SQL](https://img.shields.io/badge/SQL-336791?style=flat)
