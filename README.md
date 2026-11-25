@@ -10,7 +10,7 @@ I've led data engineering and analytics teams in regulated environments, and I w
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/krshillman/krshillman/profile-assets/contributions-dark.svg">
-  <img alt="Contribution calendar combining the krshillman (personal) and chhillman-uom (work) accounts" src="https://raw.githubusercontent.com/krshillman/krshillman/profile-assets/contributions-light.svg" width="100%">
+  <img alt="Contribution calendar krshillman (personal)" src="https://raw.githubusercontent.com/krshillman/krshillman/profile-assets/contributions-light.svg" width="100%">
 </picture>
 
 <picture>
@@ -23,9 +23,9 @@ I've led data engineering and analytics teams in regulated environments, and I w
 ### Recent activity
 
 <!-- profile:activity:start -->
-- 🔀 Opened PR [#1](https://github.com/krshillman/krshillman/pull/1) in [krshillman/krshillman](https://github.com/krshillman/krshillman): Combine personal and work accounts into one profile (merged) <sub>· personal · 25 Nov</sub>
-- 🔨 Pushed **1 commit** to [krshillman/krshillman](https://github.com/krshillman/krshillman) <sub>· personal · 25 Nov</sub>
-- 🔨 Pushed **27 commits** to [ghostinthedata-info/skills](https://github.com/ghostinthedata-info/skills) <sub>· personal · 21 Nov</sub>
+- Opened PR [#1](https://github.com/krshillman/krshillman/pull/1) in [krshillman/krshillman](https://github.com/krshillman/krshillman): Combine personal and work accounts into one profile (merged) <sub>· personal · 25 Nov</sub>
+- Pushed **1 commit** to [krshillman/krshillman](https://github.com/krshillman/krshillman) <sub>· personal · 25 Nov</sub>
+- Pushed **27 commits** to [ghostinthedata-info/skills](https://github.com/ghostinthedata-info/skills) <sub>· personal · 21 Nov</sub>
 <!-- profile:activity:end -->
 
 ### Latest writing
