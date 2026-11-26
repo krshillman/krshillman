@@ -23,6 +23,7 @@ I've led data engineering and analytics teams in regulated environments, and I w
 ### Recent activity
 
 <!-- profile:activity:start -->
+- 🔨 Pushed **1 commit** to [ghostinthedata-info/retrospectives](https://github.com/ghostinthedata-info/retrospectives) <sub>· personal · 26 Nov</sub>
 - 🔀 Opened PR [#1](https://github.com/krshillman/krshillman/pull/1) in [krshillman/krshillman](https://github.com/krshillman/krshillman): Combine personal and work accounts into one profile (merged) <sub>· personal · 25 Nov</sub>
 - 🔨 Pushed **3 commits** to [krshillman/krshillman](https://github.com/krshillman/krshillman) <sub>· personal · 25 Nov</sub>
 - 🔨 Pushed **27 commits** to [ghostinthedata-info/skills](https://github.com/ghostinthedata-info/skills) <sub>· personal · 21 Nov</sub>
