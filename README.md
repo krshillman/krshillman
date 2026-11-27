@@ -32,11 +32,11 @@ I've led data engineering and analytics teams in regulated environments, and I w
 ### Latest writing
 
 <!-- profile:blog:start -->
+- [One Pipeline, Three Clocks: What Each Extra Hour Buys](https://ghostinthedata.info/posts/2026/2026-11-27-one-pipeline-three-clocks/) <sub>· 27 Nov 2026</sub>
 - [Nobody Reads 7,000 Words the Night Before an Interview](https://ghostinthedata.info/posts/2026/2026-11-21-night-before-the-interview/) <sub>· 21 Nov 2026</sub>
 - [Very Boring but Very Responsible](https://ghostinthedata.info/posts/2026/2026-11-15-supervisory-engineering-data-managers/) <sub>· 15 Nov 2026</sub>
 - [World Building: Your World Still Needs a Why](https://ghostinthedata.info/posts/2026/2026-10-30-handlers-vault-part-1/) <sub>· 30 Oct 2026</sub>
 - [The Style Isn't the Skill](https://ghostinthedata.info/posts/2026/2026-08-31-style-isnt-the-skill/) <sub>· 31 Aug 2026</sub>
-- [AWS MWAA: The Practitioner's Unvarnished Guide](https://ghostinthedata.info/posts/2026/2026-07-18-mwaa-unvarnished-guide/) <sub>· 18 Jul 2026</sub>
 <!-- profile:blog:end -->
 
 ### Tools I work with
