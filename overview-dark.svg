@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="840" height="250" viewBox="0 0 840 250" role="img" aria-labelledby="title desc">
+<title id="title">Combined GitHub statistics</title>
+<desc id="desc">Last 12 months combined: 52 commits (personal 52, work 0), 3 pull requests, 0 reviews. Top languages: Python 98%, Shell 2%</desc>
+<style>text{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans',Helvetica,Arial,sans-serif;fill:#f0f6fc}.m{fill:#9198a1}.b{font-weight:600}</style>
+<rect x="0.5" y="0.5" width="839" height="249" rx="6" fill="#0d1117" stroke="#3d444d"/>
+<text x="24" y="40" font-size="16"><tspan class="b">Last 12 months</tspan><tspan font-size="12"><tspan dx="12" fill="#4493f8">●</tspan><tspan dx="4" class="m">personal</tspan><tspan dx="14" fill="#ab7df8">●</tspan><tspan dx="4" class="m">work</tspan></tspan></text>
+<text x="816" y="40" font-size="12" text-anchor="end" class="m">Updated 28 Nov 2026, 19:10 AEDT</text>
+<text x="90.0" y="92" font-size="24" text-anchor="middle" class="b">52</text>
+<text x="90.0" y="112" font-size="12" text-anchor="middle" class="m">Commits</text>
+<text x="90.0" y="130" font-size="11" text-anchor="middle"><tspan fill="#4493f8">●</tspan><tspan dx="4" class="m">52</tspan><tspan fill="#ab7df8" dx="14">●</tspan><tspan dx="4" class="m">0</tspan></text>
+<line x1="156.0" y1="68" x2="156.0" y2="130" stroke="#3d444d"/>
+<text x="222.0" y="92" font-size="24" text-anchor="middle" class="b">3</text>
+<text x="222.0" y="112" font-size="12" text-anchor="middle" class="m">Pull requests</text>
+<text x="222.0" y="130" font-size="11" text-anchor="middle"><tspan fill="#4493f8">●</tspan><tspan dx="4" class="m">3</tspan><tspan fill="#ab7df8" dx="14">●</tspan><tspan dx="4" class="m">0</tspan></text>
+<line x1="288.0" y1="68" x2="288.0" y2="130" stroke="#3d444d"/>
+<text x="354.0" y="92" font-size="24" text-anchor="middle" class="b">0</text>
+<text x="354.0" y="112" font-size="12" text-anchor="middle" class="m">Code reviews</text>
+<text x="354.0" y="130" font-size="11" text-anchor="middle"><tspan fill="#4493f8">●</tspan><tspan dx="4" class="m">0</tspan><tspan fill="#ab7df8" dx="14">●</tspan><tspan dx="4" class="m">0</tspan></text>
+<line x1="420.0" y1="68" x2="420.0" y2="130" stroke="#3d444d"/>
+<text x="486.0" y="92" font-size="24" text-anchor="middle" class="b">0</text>
+<text x="486.0" y="112" font-size="12" text-anchor="middle" class="m">Issues</text>
+<text x="486.0" y="130" font-size="11" text-anchor="middle"><tspan fill="#4493f8">●</tspan><tspan dx="4" class="m">0</tspan><tspan fill="#ab7df8" dx="14">●</tspan><tspan dx="4" class="m">0</tspan></text>
+<line x1="552.0" y1="68" x2="552.0" y2="130" stroke="#3d444d"/>
+<text x="618.0" y="92" font-size="24" text-anchor="middle" class="b">6</text>
+<text x="618.0" y="112" font-size="12" text-anchor="middle" class="m">Repos committed to</text>
+<text x="618.0" y="130" font-size="11" text-anchor="middle"><tspan fill="#4493f8">●</tspan><tspan dx="4" class="m">6</tspan><tspan fill="#ab7df8" dx="14">●</tspan><tspan dx="4" class="m">0</tspan></text>
+<line x1="684.0" y1="68" x2="684.0" y2="130" stroke="#3d444d"/>
+<text x="750.0" y="92" font-size="24" text-anchor="middle" class="b">82</text>
+<text x="750.0" y="112" font-size="12" text-anchor="middle" class="m">All-time since 2015</text>
+<text x="750.0" y="130" font-size="11" text-anchor="middle"><tspan fill="#4493f8">●</tspan><tspan dx="4" class="m">81</tspan><tspan fill="#ab7df8" dx="14">●</tspan><tspan dx="4" class="m">1</tspan></text>
+<line x1="24" y1="146" x2="816" y2="146" stroke="#3d444d"/>
+<text x="24" y="176" font-size="14" class="b">Languages<tspan dx="8" font-size="12" class="m" font-weight="400">share of commits, weighted by each repo's code</tspan></text>
+<clipPath id="langs"><rect x="24" y="190" width="792" height="10" rx="5.0"/></clipPath>
+<rect x="24" y="190" width="792" height="10" rx="5.0" fill="#151b23"/>
+<g clip-path="url(#langs)">
+<rect x="24.00" y="190" width="779.85" height="10" fill="#3572A5"/>
+<rect x="803.85" y="190" width="12.15" height="10" fill="#89e051"/>
+</g>
+<circle cx="29.0" cy="224" r="5" fill="#3572A5"/>
+<text x="40.0" y="228" font-size="12">Python<tspan dx="6" class="m">98.5%</tspan></text>
+<circle cx="227.0" cy="224" r="5" fill="#89e051"/>
+<text x="238.0" y="228" font-size="12">Shell<tspan dx="6" class="m">1.5%</tspan></text>
+</svg>
